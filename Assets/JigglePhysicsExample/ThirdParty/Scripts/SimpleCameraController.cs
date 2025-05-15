@@ -5,6 +5,7 @@ namespace UnityTemplateProjects {
         public enum UpdateMode {
             FixedUpdate,
             LateUpdate,
+            Update
         }
         public UpdateMode mode;
         private Vector3 vel;
@@ -31,6 +32,9 @@ namespace UnityTemplateProjects {
         }
         public void FixedUpdate() {
             if (mode == UpdateMode.FixedUpdate) {Simulate();}
+        }
+        public void Update() {
+            if (mode == UpdateMode.Update) {Simulate();}
         }
     }
 
