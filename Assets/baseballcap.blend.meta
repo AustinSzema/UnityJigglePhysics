@@ -3,7 +3,17 @@ guid: db097ad56dc23e34fa74ecef773b8d11
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Baseball Cap Base
+    second: {fileID: 2100000, guid: 8f189ad5b39ddb0429dccc56cc3448d1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Baseball Cap Brim
+    second: {fileID: 2100000, guid: 6b46cd48169a5244793d6d5e34a243f2, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
