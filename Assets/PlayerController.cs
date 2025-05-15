@@ -2,8 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using UnityEngine.Serialization;
+using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,8 +10,6 @@ public class PlayerController : MonoBehaviour
     
     [Header("Ground Movement")] public float moveSpeed = 100f;
     public float groundDrag = 5f;
-    [Space] [Tooltip("Unused")] public float walkSpeed;
-    [Tooltip("Unused")] public float sprintSpeed;
 
     [Header("Air Movement")] public float jumpForce = 30f;
     public float jumpCooldown = 0.25f;
@@ -50,7 +47,10 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] Rigidbody rb;
 
+    [SerializeField] private UnityEvent onGroundPound;
 
+    private bool pressedGroundPoundKey = false;
+    
 
     private void Start()
     {
@@ -63,6 +63,21 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    private void OnCollisionEnter(Collision other)
+    {
+        if (pressedGroundPoundKey)
+        {
+            onGroundPound.Invoke();
+            StartCoroutine(ResetGroundPoundTimer());
+        }
+    }
+
+    private IEnumerator ResetGroundPoundTimer()
+    {
+        yield return new WaitForSeconds(0.2f);
+        
+        pressedGroundPoundKey = false;
+    }
 
     private void Update()
     {
@@ -118,11 +133,11 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(baseGravity * fallGravityMultiplier * Vector3.up,
                 ForceMode.Acceleration);
         }
-        else if (rb.linearVelocity.y > 0) // Letting go of jump
+        /*else if (rb.linearVelocity.y > 0) // Letting go of jump
         {
             rb.AddForce(baseGravity * lowJumpGravityMultiplier * Vector3.up,
                 ForceMode.Acceleration);
-        }
+        }*/
         else // Rising normally
         {
             rb.AddForce(Vector3.up * baseGravity, ForceMode.Acceleration);
@@ -154,6 +169,7 @@ public class PlayerController : MonoBehaviour
         // when to ground pound
         if (Input.GetKeyDown(groundPoundKey) && canGroundPound && readyToGroundPound && !grounded)
         {
+            pressedGroundPoundKey = true;
             canGroundPound = false;
             GroundPound();
             Invoke(nameof(ResetGroundPound), groundPoundCooldown);
@@ -204,14 +220,26 @@ public class PlayerController : MonoBehaviour
         // reset y velocity
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
 
-        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+
+        if (pressedGroundPoundKey && Input.GetKey(groundPoundKey))
+        {
+            rb.AddForce(jumpForce * 1.25f * transform.up, ForceMode.Impulse);
+            
+        }
+        else
+        {
+            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+            
+        }
     }
 
     private void GroundPound()
     {
         // reset y velocity
-        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+        //rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
 
+        rb.linearVelocity = Vector3.zero; 
+            
         rb.AddForce(transform.up * groundPoundForce, ForceMode.Impulse);
     }
 

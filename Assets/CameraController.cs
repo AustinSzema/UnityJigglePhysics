@@ -14,9 +14,16 @@ public class CameraController : MonoBehaviour
     public float distance = 10f;
     private Vector2 offset;
 
+    private float initialDistance = 10f;
+
+    private void Start()
+    {
+        initialDistance = distance;
+    }
+
     public void Simulate()
     {
-        offset += new Vector2(Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y")) * 2f;
+
 
         /*
         if (Input.GetButton("Fire1") || Input.GetButton("Fire2"))
@@ -36,14 +43,16 @@ public class CameraController : MonoBehaviour
             targetLookat.position - transform.forward * distance, ref vel, Time.deltaTime);
         transform.rotation =
             Quaternion.LookRotation((targetLookat.position - transform.position).normalized, Vector3.up);
-        distance -= Input.GetAxis("Mouse ScrollWheel");
-        distance = Mathf.Max(distance, 1f);
+        
     }
 
-    /*private void Update()
+    private void Update()
     {
-        Simulate();
-    }*/
+        offset += new Vector2(Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y")) * 2f;
+        distance -= Input.GetAxis("Mouse ScrollWheel") * 5f;
+        distance = Mathf.Clamp(distance, 2f, initialDistance);
+        distance = Mathf.Max(distance, 1f);
+    }
     public void LateUpdate()
     {
         Simulate();
