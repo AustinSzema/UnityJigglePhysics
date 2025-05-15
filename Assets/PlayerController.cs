@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,8 @@ using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
+    
+    
     [Header("Ground Movement")] public float moveSpeed = 100f;
     public float groundDrag = 5f;
     [Space] [Tooltip("Unused")] public float walkSpeed;
@@ -37,8 +40,9 @@ public class PlayerController : MonoBehaviour
     public LayerMask whatIsGround;
     private bool grounded;
 
-    [FormerlySerializedAs("orientation")] public Transform cameraTransform;
-
+    [Header("Camera")]
+    private Transform cameraTransform;
+    
     float horizontalInput;
     float verticalInput;
 
@@ -52,7 +56,13 @@ public class PlayerController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        if (!cameraTransform)
+        {
+            cameraTransform = Camera.main.transform;
+        }
     }
+
+
 
     private void Update()
     {
@@ -68,6 +78,11 @@ public class PlayerController : MonoBehaviour
         if (grounded)
         {
             rb.linearDamping = groundDrag;
+            
+            if (verticalInput < 0.1f && horizontalInput < 0.1f)
+            {
+                rb.linearDamping = 10;
+            }
         }
         else
         {
@@ -92,6 +107,7 @@ public class PlayerController : MonoBehaviour
     {
         MovePlayer();
         AddGravity();
+        
     }
 
     private void AddGravity()
@@ -209,4 +225,5 @@ public class PlayerController : MonoBehaviour
         readyToGroundPound = true;
         canGroundPound = true;
     }
+    
 }

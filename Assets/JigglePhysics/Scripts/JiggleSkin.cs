@@ -7,7 +7,7 @@ namespace JigglePhysics {
 public class JiggleSkin : MonoBehaviour, IJiggleAdvancable, IJiggleBlendable {
     [Serializable]
     public class JiggleZone : JiggleRigBuilder.JiggleRig {
-        [field: SerializeField, Range(0f,1f)] public float blend { get; set; } = 1f;
+        [field: SerializeField, Range(0f,1f)] public float zoneBlend { get; set; } = 1f;
         [Tooltip("How large of a radius the zone should effect, in target-space meters. (Scaling the target will effect the radius.)")]
         public float radius;
         
@@ -230,7 +230,7 @@ public class JiggleSkin : MonoBehaviour, IJiggleAdvancable, IJiggleBlendable {
                 packedVectors.Add(new Vector4(targetPointSkinSpace.x, targetPointSkinSpace.y, targetPointSkinSpace.z,
                     zone.radius * zone.GetRootTransform().lossyScale.x));
                 packedVectors.Add(new Vector4(verletPointSkinSpace.x, verletPointSkinSpace.y, verletPointSkinSpace.z,
-                    zone.jiggleSettings.GetData().blend * blend * zone.blend));
+                    zone.jiggleSettings.GetData().blend * blend * zone.zoneBlend));
             }
             for(int i=packedVectors.Count;i<16;i++) {
                 packedVectors.Add(Vector4.zero);
