@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: db097ad56dc23e34fa74ecef773b8d11
+guid: 3027c123b2038314e83ddc17061e366a
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,18 +7,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Baseball Cap Base
-    second: {fileID: 2100000, guid: 8f189ad5b39ddb0429dccc56cc3448d1, type: 2}
+      name: Pizza Cheese Material
+    second: {fileID: 2100000, guid: 5b31fe3a6c3fb394da1b61d3139318cf, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Baseball Cap Brim
-    second: {fileID: 2100000, guid: 6b46cd48169a5244793d6d5e34a243f2, type: 2}
+      name: Pizza Crust Material
+    second: {fileID: 2100000, guid: 9e67246808b1c704aa1e63f4ca29a73d, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Baseball Cap Logo
-    second: {fileID: 2100000, guid: 881678b516711bd49bb699d4539c2aee, type: 2}
+      name: Pizza Sauce Material
+    second: {fileID: 2100000, guid: b036533670d252244b33ab54fbd8186f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
