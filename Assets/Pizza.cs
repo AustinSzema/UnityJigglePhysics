@@ -11,11 +11,12 @@ public class Pizza : MonoBehaviour
         transform.Rotate(0f, Time.deltaTime * spinSpeed, 0f);
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
             Destroy(gameObject);
         }
+
     }
 }
